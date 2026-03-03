@@ -4,7 +4,6 @@ load_working_environment;
 
 color_dict = load_my_colors;
 
-
 %% plot a_DIS vs. a_CON (resp. b_DIS vs b_CON) on the same figure for RL0, RL1, and RL3 - model with confidence-dependent learning
 
 % Versions to loop over
@@ -121,3 +120,88 @@ end
 
 
 
+%% plot parameters for parameter recovery
+
+% AFTER HAVING SIMULATED AND FITTED DATA USING parameter_recovery.m
+
+desired_n_repetitions = 50;
+
+% Models used for generating data
+generative_models = [1,2,4];  
+
+% Models used for fitting 
+% models on n-th line correspond to models to the n-th model listed in generative_models
+fitting_models_for_each_generative_model =  { [2,4]; [2]; [4]; };
+assert(size(generative_models,2) == size(fitting_models_for_each_generative_model,1), 'Problem: must be as many rows in fitting_models_for_each_generative_model as there are generative models');
+
+% instead of version names, specify folder name in which required data version is stored (c.f. Simulations_recovery folder)
+folders = [ "generativemodels_1234_fittingmodels_1234_1234_1234_1234_version_MLNSG_1reversal_partial_complete_concat";
+            "generativemodels_1234_fittingmodels_1234_1234_1234_1234_version_MLNSG_0reversals_all";
+            "generativemodels_1234_fittingmodels_1234_1234_1234_1234_version_CDAG_partial_complete_concat"];
+
+recovery_dir     = fullfile(output_dir,'Simulations_recovery');  
+
+for f = 1:numel(folders)
+    folder = folders(f);
+
+    % prep structure containing all variables needed for plotting functions
+    [s] = prepare_parameter_recovery_data_for_figures( generative_models, ...
+                                                        recovery_dir, ...
+                                                        folder, ...
+                                                        fitting_models_for_each_generative_model, ...
+                                                        data_dir, ...
+                                                        output_dir, ...
+                                                        color_dict, ...
+                                                        desired_n_repetitions);
+
+    % plot parameter recovery correlation matrix for models 2 and 4                                                  
+    models = [2,4];
+    for m = 1:numel(models)
+        generative_model = models(m); 
+        fitting_model = models(m); 
+        % prepare variables with parameters for this generative model
+        generated_parameters_combined_repetitions = s.simulated_data{generative_model}.generative_parameters;
+        recovered_parameters_combined_repetitions = s.modelling_outcomes{generative_model}.parameters;
+
+        plot_parameter_recovery_correlation_matrix(generative_model,...
+                                            fitting_model,...
+                                            generated_parameters_combined_repetitions,...
+                                            recovered_parameters_combined_repetitions,...
+                                            s.simulated_data_by_repetition,...
+                                            s.modelling_outcomes_by_repetition,...
+                                            s.models_info,...
+                                            figures_dir,...
+                                            s.reward_structure_dataset_name, ...
+                                            s.simulated_data{generative_model}, ...
+                                            s.colors, ...
+                                            s.empirical_modelling_outputs.parameters);
+
+
+    end
+
+    % plot parameters for data simulated with model 1 (classic) and fitted with models 2 and 4                                                  
+    generative_model = 1; 
+    fitting_models = [2,4];
+    for m = 1:numel(fitting_models)
+        fitting_model = fitting_models(m);
+
+        % prepare variables with parameters for this generative model
+        generated_parameters_combined_repetitions = s.simulated_data{generative_model}.generative_parameters;
+        recovered_parameters_combined_repetitions = s.modelling_outcomes{generative_model}.parameters;
+
+        % call function which creates a bunch of plots showing parameter recovery   
+        plot_recovered_bCON_bDIS_for_generativemodel1(generative_model,...
+                                                fitting_model,...
+                                                generated_parameters_combined_repetitions,...
+                                                recovered_parameters_combined_repetitions,...
+                                                s.simulated_data_by_repetition,...
+                                                s.modelling_outcomes_by_repetition,...
+                                                s.models_info,...
+                                                figures_dir,...
+                                                s.reward_structure_dataset_name, ...
+                                                s.simulated_data{generative_model}, ...
+                                                s.colors, ...
+                                                s.empirical_modelling_outputs.parameters);
+                            
+    end
+end
