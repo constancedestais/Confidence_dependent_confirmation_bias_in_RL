@@ -3,11 +3,9 @@
 
 Code for model fitting, statistics, figures, and parameter-recovery analyses for paper.
 Paper DOI: [WILL BE ADDED UPON ACCEPTANCE OF THE PAPER]
-Data can be accessed at: [WILL BE ADDED UPON ACCEPTANCE OF THE PAPER]
 
 ## Repository contents
 
-- `Data/`: preprocessed behavioral datasets (`.mat`, `.csv`)
 - `Functions/`: model, fitting, loading, plotting, and simulation utilities
 - `Outputs/`: model-fitting outputs and generated figures
 - Top-level scripts:
@@ -26,6 +24,7 @@ Data can be accessed at: [WILL BE ADDED UPON ACCEPTANCE OF THE PAPER]
 - Parallel Computing Toolbox (optional, if `use_parallel = 1`)
 - Local dependency expected by scripts:
   - `../MBB-team_VBA-toolbox`
+- Folder named "Data", containing pre-processed data - will be made available online
 
 ## Available models
 
