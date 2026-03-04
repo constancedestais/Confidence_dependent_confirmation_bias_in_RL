@@ -3,18 +3,18 @@ function [modelling_outputs] = fit_several_models(data, fitting_models, fmincon_
     % set variables that determine the dimensions of main output matrices
     [n_subj,n_sess,n_cond,n_trials_max] = size(data.correct);
 
-    % deal with MLNSG_0reversals with partial/complete feedback trials
+    % deal with RL0 with partial/complete feedback trials
     % set which conditions should be empty 
     conditions_to_remove = [];
-    if strcmp(version_name, "MLNSG_0reversals_partialfeedbacktrials")
+    if strcmp(version_name, "RL0_partialfeedbacktrials")
         % condition_names = ["partial_info_gain" ; "full_info_gain" ; "partial_info_loss" ; "full_info_loss"];
         conditions_to_remove = [2,4];
-    elseif strcmp(version_name, "MLNSG_0reversals_completefeedbacktrials")
+    elseif strcmp(version_name, "RL0_completefeedbacktrials")
         % condition_names = ["partial_info_gain" ; "full_info_gain" ; "partial_info_loss" ; "full_info_loss"];
         conditions_to_remove = [1,3];
     end
-    % SANITY CHECKS to deal with MLNSG_0reversals with partial/complete feedback trials only : check that values in absent conditions are NaNs
-    if strcmp(version_name, "MLNSG_0reversals_partialfeedbacktrials") || strcmp(version_name, "MLNSG_0reversals_completefeedbacktrials")
+    % SANITY CHECKS to deal with RL0 with partial/complete feedback trials only : check that values in absent conditions are NaNs
+    if strcmp(version_name, "RL0_partialfeedbacktrials") || strcmp(version_name, "RL0_completefeedbacktrials")
         % check in variables that all values in "absent" conditions are filled with NaNs
         assert(sum(isnan(data.correct(   :,:,conditions_to_remove,:)),"all") == numel(data.correct(   :,:,conditions_to_remove,:)), "Problem, in sub-task with partial/complete feedback, values in conditions with opposite type of feedback should be NaNs")
         assert(sum(isnan(data.confidence(:,:,conditions_to_remove,:)),"all") == numel(data.confidence(:,:,conditions_to_remove,:)), "Problem, in sub-task with partial/complete feedback, values in conditions with opposite type of feedback should be NaNs")

@@ -20,12 +20,12 @@ Paper DOI: [WILL BE ADDED UPON ACCEPTANCE OF THE PAPER]
 ## Required Data Files
 Data files will be made available online.
 Place these files in the Data/ directory:
-- data_CDAG_LearningTask_table.csv
-- data_MLNSG_0reversals_table.csv
-- data_MLNSG_1reversal_table.csv
-- data_CDAG_LearningTask_matrix.mat
-- data_MLNSG_0reversals_matrix.mat
-- data_MLNSG_1reversal_matrix.mat
+- data_RL3_LearningTask_table.csv
+- data_RL0_table.csv
+- data_RL1_table.csv
+- data_RL3_LearningTask_matrix.mat
+- data_RL0_matrix.mat
+- data_RL1_matrix.mat
 
 ## Requirements
 
@@ -44,15 +44,15 @@ Place these files in the Data/ directory:
 
 ## Available datasets 
 
-- "MLNSG_0reversals_all"
-- "MLNSG_1reversal_all"
-- "CDAG_all"
-- "MLNSG_0reversals_partialfeedbacktrials" - subset of MLNSG_0reversals_all, split by within-participant Information condition 
-- "MLNSG_0reversals_completefeedbacktrials" - subset of MLNSG_0reversals_all, split by within-participant Information condition 
-- "MLNSG_1reversal_partialfeedback" - subset of MLNSG_1reversal_all, split by between-participant Information condition 
-- "MLNSG_1reversal_completefeedback" - subset of MLNSG_1reversal_all, split by between-participant Information condition 
-- "CDAG_partialfeedback" - subset of CDAG_all, split by between-participant Information condition 
-- "CDAG_completefeedback" - subset of CDAG_all, split by between-participant Information condition 
+- "RL0_all"
+- "RL1_all"
+- "RL3_all"
+- "RL0_partialfeedbacktrials" - subset of RL0_all, split by within-participant Information condition 
+- "RL0_completefeedbacktrials" - subset of RL0_all, split by within-participant Information condition 
+- "RL1_partialfeedback" - subset of RL1_all, split by between-participant Information condition 
+- "RL1_completefeedback" - subset of RL1_all, split by between-participant Information condition 
+- "RL3_partialfeedback" - subset of RL3_all, split by between-participant Information condition 
+- "RL3_completefeedback" - subset of RL3_all, split by between-participant Information condition 
 
 ## Quick start
 

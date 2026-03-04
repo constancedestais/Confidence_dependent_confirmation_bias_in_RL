@@ -2,10 +2,10 @@ function new_data = load_behaviour_datasets(requested_output_dataset_name, reque
 
 %{
 function new_data = filter_behaviour_datasets(data, sorting_variable, dataset_name) 
-this function allows to only select one version of the task - as defined by the variable "exp_ID" in the data (e.g. pilot called CD2_v8)
+this function allows to only select one version of the task - as defined by the variable "exp_ID" in the data (e.g. pilot called RL0_v8)
 
 INPUTS
- 1. requested_output_dataset_name: should be a string that matches entry of sorting variable (exp_id/task_versions) that you want to keep e.g."CD2_v8", OR "all" to mean no filter
+ 1. requested_output_dataset_name: should be a string that matches entry of sorting variable (exp_id/task_versions) that you want to keep e.g."RL0_v8", OR "all" to mean no filter
         Names you can request can be found in the list of "requested_output_dataset_name" in the read_behaviour_dataset_dictionary.m function
  2. requested_type: accepts data in a "table", in a structure ("matrix") of matrices of dimensions: n_participants x n_conditions x n_trials
 
@@ -18,25 +18,20 @@ matrix or table (depending on the requested type) with the participants (and som
 initial_dataset_names = read_behaviour_dataset_dictionary(requested_output_dataset_name);
 
 % set variables specific to each requested dataset
-if contains(requested_output_dataset_name, "CD2")
-    all_versions_name     = "CD2_all"; % will be compared to requested_output_dataset_name to check if the latter includes ALL or a SUBSET of participants in this dataset
-    matrix_file_name      = "data_CD2_LearningTask_matrix.mat";
-    table_file_name       = "data_CD2_LearningTask_table.csv";
+if contains(requested_output_dataset_name, "RL3")
+    all_versions_name     = "RL3_all"; % will be compared to requested_output_dataset_name to check if the latter includes ALL or a SUBSET of participants in this dataset
+    matrix_file_name      = "data_RL3_LearningTask_matrix.mat";
+    table_file_name       = "data_RL3_LearningTask_table.csv";
 
-elseif contains(requested_output_dataset_name, "CDAG")
-    all_versions_name     = "CDAG_all"; % will be compared to requested_output_dataset_name to check if the latter includes ALL or a SUBSET of participants in this dataset
-    matrix_file_name      = "data_CDAG_LearningTask_matrix.mat";
-    table_file_name       = "data_CDAG_LearningTask_table.csv";
+elseif contains(requested_output_dataset_name, "RL1")
+    all_versions_name     = "RL1_all"; % will be compared to requested_output_dataset_name to check if the latter includes ALL or a SUBSET of participants in this dataset
+    matrix_file_name      = "data_RL1_matrix.mat";
+    table_file_name       = "data_RL1_table.csv";
 
-elseif contains(requested_output_dataset_name, "MLNSG_1reversal")
-    all_versions_name     = "MLNSG_1reversal_all"; % will be compared to requested_output_dataset_name to check if the latter includes ALL or a SUBSET of participants in this dataset
-    matrix_file_name      = "data_MLNSG_1reversal_matrix.mat";
-    table_file_name       = "data_MLNSG_1reversal_table.csv";
-
-elseif contains(requested_output_dataset_name, "MLNSG_0reversals") 
-    all_versions_name     = "MLNSG_0reversals_all"; % will be compared to requested_output_dataset_name to check if the latter includes ALL or a SUBSET of participants in this dataset
-    matrix_file_name      = "data_MLNSG_0reversals_matrix.mat";
-    table_file_name       = "data_MLNSG_0reversals_table.csv";
+elseif contains(requested_output_dataset_name, "RL0") 
+    all_versions_name     = "RL0_all"; % will be compared to requested_output_dataset_name to check if the latter includes ALL or a SUBSET of participants in this dataset
+    matrix_file_name      = "data_RL0_matrix.mat";
+    table_file_name       = "data_RL0_table.csv";
 
 else 
     warning('The requested_output_dataset_name you have requested are not coded in the filter_parameter_datasets.m function')
@@ -124,8 +119,8 @@ elseif (requested_type == "matrix")
     end  
 end
 
-%% deal with partialfeedbacktrials and completefeedbacktrials in MLNSG_0reversals, which require subsetting trials within each participant  
-% specifically, these versions require filtering out trials with partial/complete feedback within each participant in MLNSG_0reversals
+%% deal with partialfeedbacktrials and completefeedbacktrials in RL0, which require subsetting trials within each participant  
+% specifically, these versions require filtering out trials with partial/complete feedback within each participant in RL0
 
 if contains(requested_output_dataset_name, "completefeedbacktrials") || contains(requested_output_dataset_name, "partialfeedbacktrials") 
     % set filtering variables according to requested type of feedback

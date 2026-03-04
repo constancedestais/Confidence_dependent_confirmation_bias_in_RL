@@ -9,7 +9,7 @@ function [reward_schedule, correct_schedule, reversal_schedule, valence_schedule
     assert(fixed_reversal_schedule == 1 | fixed_reversal_schedule ==0, 'Problem, "fixed_reversal_schedule" input to function must be equal to 0 or 1')
 
     %% prepare variables for task schedule except for feedback type
-    if contains(dataset_name,['CDAG'])
+    if contains(dataset_name,['RL3'])
         % set useful variables
         n_conditions = 4;
         max_n_trials_by_cond = 40;
@@ -21,7 +21,7 @@ function [reward_schedule, correct_schedule, reversal_schedule, valence_schedule
         % trials on/around which reversals happen 
         fixed_reversal_trial_number_by_condition = { [20],    [10,20,30],  [20],       [10,20,30] };
 
-    elseif contains(dataset_name,["MLNSG_1reversal"])
+    elseif contains(dataset_name,["RL1"])
         % set useful variables
         n_conditions = 4;
         max_n_trials_by_cond = 30;
@@ -33,7 +33,7 @@ function [reward_schedule, correct_schedule, reversal_schedule, valence_schedule
         % trials on/around which reversals happen 
         fixed_reversal_trial_number_by_condition = { [],    [15],  [],       [15] };
 
-    elseif contains(dataset_name,["MLNSG_0reversals"])
+    elseif contains(dataset_name,["RL0"])
         % set useful variables
         n_conditions = 4;
         max_n_trials_by_cond = 24;
@@ -50,15 +50,15 @@ function [reward_schedule, correct_schedule, reversal_schedule, valence_schedule
     end
 
     %% prepare variable for feedback type
-    if contains(dataset_name,['CDAG_partialfeedback', "MLNSG_1reversal_partialfeedback"])
+    if contains(dataset_name,['RL3_partialfeedback', "RL1_partialfeedback"])
         full_feedback_by_condition = { 0, 0, 0, 0 };
-    elseif contains(dataset_name,["CDAG_completefeedback", "MLNSG_1reversal_completefeedback" ])
+    elseif contains(dataset_name,["RL3_completefeedback", "RL1_completefeedback" ])
         full_feedback_by_condition = { 1, 1, 1, 1 };
-    elseif contains(dataset_name,["MLNSG_0reversals_all"])
+    elseif contains(dataset_name,["RL0_all"])
         full_feedback_by_condition = { 0, 1, 0, 1 };
-    elseif contains(dataset_name,["MLNSG_0reversals_partialfeedbacktrials"])
+    elseif contains(dataset_name,["RL0_partialfeedbacktrials"])
         full_feedback_by_condition = { 0, NaN, 0, NaN };
-    elseif contains(dataset_name,["MLNSG_0reversals_completefeedbacktrials"])
+    elseif contains(dataset_name,["RL0_completefeedbacktrials"])
         full_feedback_by_condition = { NaN, 1, NaN, 1 };
     else 
         msg = sprintf("Please request a different version name which corresponds to a particular type of feedback (partial/complete), other than %s",version_name);
@@ -188,19 +188,19 @@ function [reward_schedule, correct_schedule, reversal_schedule, valence_schedule
 
     % sanity checks
     switch dataset_name
-    case 'CDAG'
+    case 'RL3'
         assert( sum( reversal_schedule(1,1,:) ) == 1 , 'Problem: there should be 1 reversal in block 1' ) ;
         assert( sum( reversal_schedule(1,2,:) ) == 3 , 'Problem: there should be 3 reversals in block 2' ) ;
         assert( sum( reversal_schedule(1,3,:) ) == 1 , 'Problem: there should be 1 reversal in block 3' ) ;
         assert( sum( reversal_schedule(1,4,:) ) == 3 , 'Problem: there should be 3 reversals in block 4' ) ;
 
-    case 'MLNSG_1reversal'
+    case 'RL1'
         assert( sum( reversal_schedule(1,1,:) ) == 0 , 'Problem: there should be 0 reversals in block 1' ) ;
         assert( sum( reversal_schedule(1,2,:) ) == 1 , 'Problem: there should be 1 reversal in block 2' ) ;
         assert( sum( reversal_schedule(1,3,:) ) == 0 , 'Problem: there should be 0 reversals in block 3' ) ;
         assert( sum( reversal_schedule(1,4,:) ) == 1 , 'Problem: there should be 1 reversal in block 4' ) ;
 
-    case 'MLNSG_0reversals'
+    case 'RL0'
         assert( sum( reversal_schedule(1,1,:) ) == 0 , 'Problem: there should be 0 reversals in block 1' ) ;
         assert( sum( reversal_schedule(1,2,:) ) == 0 , 'Problem: there should be 0 reversals in block 2' ) ;
         assert( sum( reversal_schedule(1,3,:) ) == 0 , 'Problem: there should be 0 reversals in block 3' ) ;

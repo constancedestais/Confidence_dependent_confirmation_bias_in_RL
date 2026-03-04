@@ -4,125 +4,108 @@ function corresponding_smallest_dataset_units = read_modelling_output_dataset_di
 % function 
     - creates a dictionary of task versions that can ve requested (the keys) and the smallest dataset units (values) that must be combined in order to get these task versions
     - returns the smallest_dataset_units corresponding to the requested_output_dataset_name 
-% NB: can also consult dictionary like this: dataset_dictionary{"CD2_partialfeedback"} 
+% NB: can also consult dictionary like this: dataset_dictionary{"RL3_partialfeedback"} 
 %}
 
 
 % --- define key↔value pairs clearly, one per row ---
 pairs = {
-    % -------- CD2 datasets --------
-    "CD2_v8",                                "CD2_v8";
-    "CD2_v9",                                "CD2_v9";
-    "CD2_v10",                               "CD2_v10";
-    "CD2_v11",                               "CD2_v11";
-    "CD2_v12",                               "CD2_v12";
-    "CD2_v13",                               "CD2_v13";
-    "CD2_v14",                               "CD2_v14";
-    "CD2_v15",                               "CD2_v15";
-    "CD2_vA",                                ["CD2_v8","CD2_v12"];
-    "CD2_vB",                                ["CD2_v9","CD2_v13"];
-    "CD2_vC",                                ["CD2_v10","CD2_v14"];
-    "CD2_vD",                                ["CD2_v11","CD2_v15"];
-    "CD2_partialfeedback",                   ["CD2_v8","CD2_v10","CD2_v12","CD2_v14"];   % NEED TO DOUBLE CHECK !!!
-    "CD2_completefeedback",                  ["CD2_v9","CD2_v11","CD2_v13","CD2_v15"];   % NEED TO DOUBLE CHECK !!!
-    "CD2_all",                               ["CD2_v8","CD2_v9","CD2_v10","CD2_v11","CD2_v12","CD2_v13","CD2_v14","CD2_v15"];
+    % -------- RL3 datasets --------
+    "RL3_vA",                               "RL3_vA";
+    "RL3_vB",                               "RL3_vB";
+    "RL3_vC",                               "RL3_vC";
+    "RL3_vD",                               "RL3_vD";
+    "RL3_partialfeedback",                  ["RL3_vA","RL3_vC"];
+    "RL3_completefeedback",                 ["RL3_vB","RL3_vD"];
+    "RL3_all",                              ["RL3_vA","RL3_vB","RL3_vC","RL3_vD"];
 
-    % -------- CDAG datasets --------
-    "CDAG_vA",                               "CDAG_vA";
-    "CDAG_vB",                               "CDAG_vB";
-    "CDAG_vC",                               "CDAG_vC";
-    "CDAG_vD",                               "CDAG_vD";
-    "CDAG_partialfeedback",                  ["CDAG_vA","CDAG_vC"];
-    "CDAG_completefeedback",                 ["CDAG_vB","CDAG_vD"];
-    "CDAG_all",                              ["CDAG_vA","CDAG_vB","CDAG_vC","CDAG_vD"];
+    % -------- RL1 reversal datasets --------
+    "RL1_exp1",                  "RL1_exp1";
+    "RL1_exp2",                  "RL1_exp2";
+    "RL1_exp3",                  "RL1_exp3";
+    "RL1_completefeedback",      "RL1_exp1";
+    "RL1_partialfeedback",       ["RL1_exp2","RL1_exp3"];
+    "RL1_all",                   ["RL1_exp1","RL1_exp2","RL1_exp3"];
 
-    % -------- MLNSG 1 reversal datasets --------
-    "MLNSG_1reversal_exp1",                  "MLNSG_1reversal_exp1";
-    "MLNSG_1reversal_exp2",                  "MLNSG_1reversal_exp2";
-    "MLNSG_1reversal_exp3",                  "MLNSG_1reversal_exp3";
-    "MLNSG_1reversal_completefeedback",      "MLNSG_1reversal_exp1";
-    "MLNSG_1reversal_partialfeedback",       ["MLNSG_1reversal_exp2","MLNSG_1reversal_exp3"];
-    "MLNSG_1reversal_all",                   ["MLNSG_1reversal_exp1","MLNSG_1reversal_exp2","MLNSG_1reversal_exp3"];
+    % -------- RL0 reversals datasets --------
+    "RL0_exp1",                 "RL0_exp1";
+    "RL0_exp2",                 "RL0_exp2";
+    "RL0_exp3",                 "RL0_exp3";
+    "RL0_exp4",                 "RL0_exp4";
+    "RL0_exp5",                 "RL0_exp5";
+    "RL0_exp6",                 "RL0_exp6";
+    "RL0_exp7",                 "RL0_exp7";
+    "RL0_all",                  ["RL0_exp1", ... 
+                                                "RL0_exp2",...
+                                                "RL0_exp3",...
+                                                "RL0_exp4",...
+                                                "RL0_exp5",...
+                                                "RL0_exp6",...
+                                                "RL0_exp7"];
 
-    % -------- MLNSG 0 reversals datasets --------
-    "MLNSG_0reversals_exp1",                 "MLNSG_0reversals_exp1";
-    "MLNSG_0reversals_exp2",                 "MLNSG_0reversals_exp2";
-    "MLNSG_0reversals_exp3",                 "MLNSG_0reversals_exp3";
-    "MLNSG_0reversals_exp4",                 "MLNSG_0reversals_exp4";
-    "MLNSG_0reversals_exp5",                 "MLNSG_0reversals_exp5";
-    "MLNSG_0reversals_exp6",                 "MLNSG_0reversals_exp6";
-    "MLNSG_0reversals_exp7",                 "MLNSG_0reversals_exp7";
-    "MLNSG_0reversals_all",                  ["MLNSG_0reversals_exp1", ... 
-                                                "MLNSG_0reversals_exp2",...
-                                                "MLNSG_0reversals_exp3",...
-                                                "MLNSG_0reversals_exp4",...
-                                                "MLNSG_0reversals_exp5",...
-                                                "MLNSG_0reversals_exp6",...
-                                                "MLNSG_0reversals_exp7"];
+    % -------- RL0 reversals datasets - with partial feedback --------
+    "RL0_exp1_partialfeedbacktrials", "RL0_exp1_partialfeedbacktrials";
+    "RL0_exp2_partialfeedbacktrials", "RL0_exp2_partialfeedbacktrials";
+    "RL0_exp3_partialfeedbacktrials", "RL0_exp3_partialfeedbacktrials";
+    "RL0_exp4_partialfeedbacktrials", "RL0_exp4_partialfeedbacktrials";
+    "RL0_exp5_partialfeedbacktrials", "RL0_exp5_partialfeedbacktrials";
+    "RL0_exp6_partialfeedbacktrials", "RL0_exp6_partialfeedbacktrials";
+    "RL0_exp7_partialfeedbacktrials", "RL0_exp7_partialfeedbacktrials";
+    "RL0_partialfeedbacktrials",      ["RL0_exp1_partialfeedbacktrials",...
+                                                    "RL0_exp2_partialfeedbacktrials",...
+                                                    "RL0_exp3_partialfeedbacktrials",...
+                                                    "RL0_exp4_partialfeedbacktrials",...
+                                                    "RL0_exp5_partialfeedbacktrials",...
+                                                    "RL0_exp6_partialfeedbacktrials",...
+                                                    "RL0_exp7_partialfeedbacktrials"];
 
-    % -------- MLNSG 0 reversals datasets - with partial feedback --------
-    "MLNSG_0reversals_exp1_partialfeedbacktrials", "MLNSG_0reversals_exp1_partialfeedbacktrials";
-    "MLNSG_0reversals_exp2_partialfeedbacktrials", "MLNSG_0reversals_exp2_partialfeedbacktrials";
-    "MLNSG_0reversals_exp3_partialfeedbacktrials", "MLNSG_0reversals_exp3_partialfeedbacktrials";
-    "MLNSG_0reversals_exp4_partialfeedbacktrials", "MLNSG_0reversals_exp4_partialfeedbacktrials";
-    "MLNSG_0reversals_exp5_partialfeedbacktrials", "MLNSG_0reversals_exp5_partialfeedbacktrials";
-    "MLNSG_0reversals_exp6_partialfeedbacktrials", "MLNSG_0reversals_exp6_partialfeedbacktrials";
-    "MLNSG_0reversals_exp7_partialfeedbacktrials", "MLNSG_0reversals_exp7_partialfeedbacktrials";
-    "MLNSG_0reversals_partialfeedbacktrials",      ["MLNSG_0reversals_exp1_partialfeedbacktrials",...
-                                                    "MLNSG_0reversals_exp2_partialfeedbacktrials",...
-                                                    "MLNSG_0reversals_exp3_partialfeedbacktrials",...
-                                                    "MLNSG_0reversals_exp4_partialfeedbacktrials",...
-                                                    "MLNSG_0reversals_exp5_partialfeedbacktrials",...
-                                                    "MLNSG_0reversals_exp6_partialfeedbacktrials",...
-                                                    "MLNSG_0reversals_exp7_partialfeedbacktrials"];
+    % -------- RL0 reversals datasets - with complete feedback --------
+    "RL0_exp1_completefeedbacktrials", "RL0_exp1_completefeedbacktrials";
+    "RL0_exp2_completefeedbacktrials", "RL0_exp2_completefeedbacktrials";
+    "RL0_exp3_completefeedbacktrials", "RL0_exp3_completefeedbacktrials";
+    "RL0_exp4_completefeedbacktrials", "RL0_exp4_completefeedbacktrials";
+    "RL0_exp5_completefeedbacktrials", "RL0_exp5_completefeedbacktrials";
+    "RL0_exp6_completefeedbacktrials", "RL0_exp6_completefeedbacktrials";
+    "RL0_exp7_completefeedbacktrials", "RL0_exp7_completefeedbacktrials";
+    "RL0_completefeedbacktrials",      ["RL0_exp1_completefeedbacktrials",...
+                                                    "RL0_exp2_completefeedbacktrials",...
+                                                    "RL0_exp3_completefeedbacktrials",...
+                                                    "RL0_exp4_completefeedbacktrials",...
+                                                    "RL0_exp5_completefeedbacktrials",...
+                                                    "RL0_exp6_completefeedbacktrials",...
+                                                    "RL0_exp7_completefeedbacktrials"];
 
-    % -------- MLNSG 0 reversals datasets - with complete feedback --------
-    "MLNSG_0reversals_exp1_completefeedbacktrials", "MLNSG_0reversals_exp1_completefeedbacktrials";
-    "MLNSG_0reversals_exp2_completefeedbacktrials", "MLNSG_0reversals_exp2_completefeedbacktrials";
-    "MLNSG_0reversals_exp3_completefeedbacktrials", "MLNSG_0reversals_exp3_completefeedbacktrials";
-    "MLNSG_0reversals_exp4_completefeedbacktrials", "MLNSG_0reversals_exp4_completefeedbacktrials";
-    "MLNSG_0reversals_exp5_completefeedbacktrials", "MLNSG_0reversals_exp5_completefeedbacktrials";
-    "MLNSG_0reversals_exp6_completefeedbacktrials", "MLNSG_0reversals_exp6_completefeedbacktrials";
-    "MLNSG_0reversals_exp7_completefeedbacktrials", "MLNSG_0reversals_exp7_completefeedbacktrials";
-    "MLNSG_0reversals_completefeedbacktrials",      ["MLNSG_0reversals_exp1_completefeedbacktrials",...
-                                                    "MLNSG_0reversals_exp2_completefeedbacktrials",...
-                                                    "MLNSG_0reversals_exp3_completefeedbacktrials",...
-                                                    "MLNSG_0reversals_exp4_completefeedbacktrials",...
-                                                    "MLNSG_0reversals_exp5_completefeedbacktrials",...
-                                                    "MLNSG_0reversals_exp6_completefeedbacktrials",...
-                                                    "MLNSG_0reversals_exp7_completefeedbacktrials"];
+    % -------- RL1 reversal datasets - blocks 1&3 --------
+    "RL1_exp1_blocks13",             "RL1_exp1_blocks13";
+    "RL1_exp2_blocks13",             "RL1_exp2_blocks13";
+    "RL1_exp3_blocks13",             "RL1_exp3_blocks13";
+    "RL1_partialfeedback_blocks13",  ["RL1_exp2_blocks13","RL1_exp3_blocks13"];
+    "RL1_completefeedback_blocks13", "RL1_exp1_blocks13";
+    "RL1_all_blocks13",              ["RL1_exp1_blocks13","RL1_exp2_blocks13","RL1_exp3_blocks13"];
 
-    % -------- MLNSG 1 reversal datasets - blocks 1&3 --------
-    "MLNSG_1reversal_exp1_blocks13",             "MLNSG_1reversal_exp1_blocks13";
-    "MLNSG_1reversal_exp2_blocks13",             "MLNSG_1reversal_exp2_blocks13";
-    "MLNSG_1reversal_exp3_blocks13",             "MLNSG_1reversal_exp3_blocks13";
-    "MLNSG_1reversal_partialfeedback_blocks13",  ["MLNSG_1reversal_exp2_blocks13","MLNSG_1reversal_exp3_blocks13"];
-    "MLNSG_1reversal_completefeedback_blocks13", "MLNSG_1reversal_exp1_blocks13";
-    "MLNSG_1reversal_all_blocks13",              ["MLNSG_1reversal_exp1_blocks13","MLNSG_1reversal_exp2_blocks13","MLNSG_1reversal_exp3_blocks13"];
+    % -------- RL1 reversal datasets - blocks 2&4 --------
+    "RL1_exp1_blocks24",              "RL1_exp1_blocks24";
+    "RL1_exp2_blocks24",              "RL1_exp2_blocks24";
+    "RL1_exp3_blocks24",              "RL1_exp3_blocks24";
+    "RL1_partialfeedback_blocks24",   ["RL1_exp2_blocks24","RL1_exp3_blocks24"];
+    "RL1_completefeedback_blocks24",  "RL1_exp1_blocks24";
+    "RL1_all_blocks24",               ["RL1_exp1_blocks24","RL1_exp2_blocks24","RL1_exp3_blocks24"];
 
-    % -------- MLNSG 1 reversal datasets - blocks 2&4 --------
-    "MLNSG_1reversal_exp1_blocks24",              "MLNSG_1reversal_exp1_blocks24";
-    "MLNSG_1reversal_exp2_blocks24",              "MLNSG_1reversal_exp2_blocks24";
-    "MLNSG_1reversal_exp3_blocks24",              "MLNSG_1reversal_exp3_blocks24";
-    "MLNSG_1reversal_partialfeedback_blocks24",   ["MLNSG_1reversal_exp2_blocks24","MLNSG_1reversal_exp3_blocks24"];
-    "MLNSG_1reversal_completefeedback_blocks24",  "MLNSG_1reversal_exp1_blocks24";
-    "MLNSG_1reversal_all_blocks24",               ["MLNSG_1reversal_exp1_blocks24","MLNSG_1reversal_exp2_blocks24","MLNSG_1reversal_exp3_blocks24"];
+    % -------- RL3 1 reversal datasets - blocks 1&3 --------
+    "RL3_vA_blocks13",                      "RL3_vA_blocks13";
+    "RL3_vB_blocks13",                      "RL3_vB_blocks13";
+    "RL3_vC_blocks13",                      "RL3_vC_blocks13";
+    "RL3_vD_blocks13",                      "RL3_vD_blocks13";
+    "RL3_partialfeedback_blocks13",         ["RL3_vA_blocks13", "RL3_vC_blocks13"];
+    "RL3_completefeedback_blocks13",        ["RL3_vB_blocks13", "RL3_vD_blocks13"];
+    "RL3_all_blocks13",                     ["RL3_vA_blocks13","RL3_vB_blocks13","RL3_vC_blocks13","RL3_vD_blocks13"];
 
-    % -------- CDAG 1 reversal datasets - blocks 1&3 --------
-    "CDAG_vA_blocks13",                      "CDAG_vA_blocks13";
-    "CDAG_vB_blocks13",                      "CDAG_vB_blocks13";
-    "CDAG_vC_blocks13",                      "CDAG_vC_blocks13";
-    "CDAG_vD_blocks13",                      "CDAG_vD_blocks13";
-    "CDAG_partialfeedback_blocks13",         ["CDAG_vA_blocks13", "CDAG_vC_blocks13"];
-    "CDAG_completefeedback_blocks13",        ["CDAG_vB_blocks13", "CDAG_vD_blocks13"];
-    "CDAG_all_blocks13",                     ["CDAG_vA_blocks13","CDAG_vB_blocks13","CDAG_vC_blocks13","CDAG_vD_blocks13"];
-
-    % -------- CDAG 1 reversal datasets - blocks 2&4 --------
-    "CDAG_vA_blocks24",                      "CDAG_vA_blocks24";
-    "CDAG_vB_blocks24",                      "CDAG_vB_blocks24";
-    "CDAG_vC_blocks24",                      "CDAG_vC_blocks24";
-    "CDAG_vD_blocks24",                      "CDAG_vD_blocks24";
-    "CDAG_all_blocks24",                     ["CDAG_vA_blocks24","CDAG_vB_blocks24","CDAG_vC_blocks24","CDAG_vD_blocks24"];
+    % -------- RL3 1 reversal datasets - blocks 2&4 --------
+    "RL3_vA_blocks24",                      "RL3_vA_blocks24";
+    "RL3_vB_blocks24",                      "RL3_vB_blocks24";
+    "RL3_vC_blocks24",                      "RL3_vC_blocks24";
+    "RL3_vD_blocks24",                      "RL3_vD_blocks24";
+    "RL3_all_blocks24",                     ["RL3_vA_blocks24","RL3_vB_blocks24","RL3_vC_blocks24","RL3_vD_blocks24"];
 };
 
 % Keys and values (values remain string arrays; singletons are 1x1 string arrays)

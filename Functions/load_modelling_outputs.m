@@ -14,10 +14,10 @@ VARIABLES IN FUNCTION
   - most output variables are of size {n_models}(n_participants,:)
   - corresponding_initial_dataset_names: on row i, stores the names of all the initial datasets (exp_ID) that make up the output dataset on row i in output_dataset_names
     e.g. 
-      - requested_output_dataset_name = "CD2_partialfeedback"
-      - corresponds to row 13 in output_dataset_names_CD2
-      - so need to combine all datasets mentioned on row 13 of corresponding_initial_dataset_names_CD2 (so "CD2_v9","CD2_v11","CD2_v13","CD2_v15")
-      - at the end, to see parameters for model 4 in the CD2_partialfeedback dataset, write: modelling_outputs.parameters{4}
+      - requested_output_dataset_name = "RL1_partialfeedback"
+      - corresponds to row 13 in output_dataset_names_RL1
+      - so need to combine all datasets mentioned on row 13 of corresponding_initial_dataset_names_RL1 (so "RL1_v9","RL1_v11","RL1_v13","RL1_v15")
+      - at the end, to see parameters for model 4 in the RL1_partialfeedback dataset, write: modelling_outputs.parameters{4}
 %}
 
 % sanity check

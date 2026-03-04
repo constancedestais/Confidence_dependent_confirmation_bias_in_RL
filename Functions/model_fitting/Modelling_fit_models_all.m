@@ -27,7 +27,7 @@ end
 % checks for specific models
 if ismember(model,[12 13 14])
     % warning('Functions models 12-14 assumes that conditions = (1) low_volatility_gain  ; (2) high_volatility_gain ; (3) low_volatility_loss ; (4) high_volatility_loss')
-    assert(~any(contains(current_exp_ID, "MLNSG_0reversals")),"Problem: can only fit model 12-14 on datasets with within-participant volatility conditions (e.g. not MLNSG_0_reversals)");
+    assert(~any(contains(current_exp_ID, "RL0")),"Problem: can only fit model 12-14 on datasets with within-participant volatility conditions (e.g. not RL0)");
 end
 
 % Create input struct

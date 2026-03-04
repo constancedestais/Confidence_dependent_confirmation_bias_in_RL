@@ -159,13 +159,12 @@ for v = 1:n_versions
     unique_participants_version = unique(data.participant_ID);
     
     % set which conditions correspond to low/no volatility and high volatility 
-    if contains(version_names(v), "CD2") || contains(version_names(v), "CDAG") ||  contains(version_names(v), "MLNSG_1reversal")
-        % CD2 conditions:  1=low_volatility_gain; 2=_high_volatility_gain ; 3=low_volatility_loss; 4=_high_volatility_loss    
-        % CDAG conditions: 1=low_volatility_gain; 2=_high_volatility_gain ; 3=low_volatility_loss; 4=_high_volatility_loss    
-        % MLNSG_1reversal conditions: 1 = stable_gain; 2 = volatile_gain; 3 = stable_loss; 4 = volatile_loss
+    if contains(version_names(v), "RL3") ||  contains(version_names(v), "RL1")
+        % RL3 conditions: 1=low_volatility_gain; 2=_high_volatility_gain ; 3=low_volatility_loss; 4=_high_volatility_loss    
+        % RL1 conditions: 1 = stable_gain; 2 = volatile_gain; 3 = stable_loss; 4 = volatile_loss
         low_volatility_conditions  = [1,3];
         high_volatility_conditions = [2,4];
-    elseif contains(version_names(v), "MLNSG_0reversals")
+    elseif contains(version_names(v), "RL0")
         % conditions: 1: gain & partial feedback ; 2: gain & complete feedback ; 3: loss & partialfeedback ; 4: loss & complete feedback
         high_volatility_conditions = [];
         low_volatility_conditions  = [1,2,3,4];
@@ -188,9 +187,9 @@ for v = 1:n_versions
         task_versions{v}(p)         = unique(data.exp_ID(index_generic));
         participants{v}(p)          = unique_participants_version(p);
         interleaved_valence{v}(p)   = unique(data.interleaved_valence(index_generic));
-        % skip feedback index for MLNSG_0reversals_all design, since feedback is a within-participant condition there
+        % skip feedback index for RL0_all design, since feedback is a within-participant condition there
         %{
-        if unique(data.exp_ID(index_generic)) ~= "MLNSG_0reversals_all"
+        if unique(data.exp_ID(index_generic)) ~= "RL0_all"
             feedback{v}(p) = unique(data.full_feedback(index_generic));
         end
         %}
@@ -272,7 +271,7 @@ for v = 1:n_versions
     col_participants                                  = [ col_participants                                  ; participants{v}' ];
     col_interleaved_valence                           = [ col_interleaved_valence                           ; interleaved_valence{v}' ];
     %{
-    if unique(data.exp_ID(index_generic)) ~= "MLNSG_0reversals_all"
+    if unique(data.exp_ID(index_generic)) ~= "RL0_all"
         col_feedback                                      = [ col_feedback                                      ; feedback{v}' ];
     end
     %}

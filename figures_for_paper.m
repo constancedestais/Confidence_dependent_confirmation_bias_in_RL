@@ -9,9 +9,9 @@ color_dict = load_my_colors;
 %% plot estimated parameters and learning rate as a function of confidence for RL0, RL1, and RL3 (full dataset) for models 2 and 4 (c.f. README)
 
 % all requested versions to loop over
-version_names = ["MLNSG_0reversals_all",...
-                "MLNSG_1reversal_all",...
-                "CDAG_all"];
+version_names = ["RL0_all",...
+                "RL1_all",...
+                "RL3_all"];
 % Models to loop over
 models = [2,4]; 
 
@@ -44,9 +44,9 @@ end
 %% plot estimated parameters and learning rate as a function of confidence in RL0, RL1, and RL3 (Complete info condition), using model 2 (c.f. README)
 
 % all requested versions to loop over
-version_names = ["MLNSG_0reversals_completefeedbacktrials",...
-                "MLNSG_1reversal_completefeedback",...
-                "CDAG_completefeedback"];
+version_names = ["RL0_completefeedbacktrials",...
+                "RL1_completefeedback",...
+                "RL3_completefeedback"];
 % Models to loop over
 models = [2]; 
 
@@ -78,7 +78,7 @@ end
 
 
 %% plot choice accuracy and confidence by trial in RL0 - across all conditions
-version_name = "MLNSG_0reversals_all"; 
+version_name = "RL0_all"; 
 
 % load matrix-form data
 dataset_type = "matrix";
@@ -93,7 +93,7 @@ plot_behaviour_over_block_average(prepared_data, version_name, figures_dir);
 
 %% plot choice accuracy and confidence by trial in RL1 and RL3 - across high vs low volatility
 
-version_names = {"MLNSG_1reversal_all", "CDAG_all"}; 
+version_names = {"RL1_all", "RL3_all"}; 
 
 for version_index = 1:numel(version_names)
     version_name = version_names{version_index};
@@ -115,7 +115,7 @@ end
 pre  = 5;
 post = 5;
 
-version_name = [ "MLNSG_1reversal_all"] ; %+ version_names_CD2 ; %version_names_MLNSG + version_names_CDAG; 
+version_name = [ "RL1_all"] ; 
 condition_idx = [2 4];  % only these conditions have a reversal
 
 % load behavioural data - load data in both table and matrix forms
@@ -138,7 +138,7 @@ plot_behaviour_around_reversal_one_var(out_conf, pre, version_name, figures_dir,
 pre  = 5;
 post = 5;
 
-version_name = [ "CDAG_all"] ; %+ version_names_CD2 ; %version_names_MLNSG + version_names_CDAG; 
+version_name = [ "RL3_all"] ; 
 condition_idx = [1 2 3 4]; 
 
 % load behavioural data - load data in both table and matrix forms

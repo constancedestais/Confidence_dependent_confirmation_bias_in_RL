@@ -67,17 +67,17 @@ colors = {color_dict.green,color_dict.red,color_dict.blue,color_dict.grey,color_
 
 %% -------- CREATE SUBSET OF DATA WITH SAME NUMBER OF AGENTS AS IN REAL DATASETS, e.g. simulated 100 agents in each repetition but real data has 21 participants only --------
 % generic version name
-if contains(version_name, "MLNSG_0")
+if contains(version_name, "RL0")
     n_agents_in_real_data = 148;
-elseif contains(version_name, "MLNSG_1reversal_partialfeedback")
+elseif contains(version_name, "RL1_partialfeedback")
     n_agents_in_real_data = 18;  
-elseif contains(version_name, "MLNSG_1reversal_completefeedback")
+elseif contains(version_name, "RL1_completefeedback")
     n_agents_in_real_data = 48;  
-elseif contains(version_name, "MLNSG_1reversal_partial_complete")
+elseif contains(version_name, "RL1_partial_complete")
     n_agents_in_real_data = 66;
-elseif (contains(version_name, "CDAG_partialfeedback") || contains(version_name, "CDAG_completefeedback"))
+elseif (contains(version_name, "RL3_partialfeedback") || contains(version_name, "RL3_completefeedback"))
     n_agents_in_real_data = 50;
-elseif contains(version_name, "CDAG_partial_complete")
+elseif contains(version_name, "RL3_partial_complete")
     n_agents_in_real_data = 100;
 end
 
@@ -109,32 +109,32 @@ modelling_outcomes_by_repetition = modelling_outcomes_by_repetition(1:final_n_re
 %% -------- also load empirical parameters for same datasets --------
 
 % generic version name
-if contains(version_name, "MLNSG_0reversals_partialfeedbacktrials")
-    empirical_version_name = "MLNSG_0reversals_partialfeedbacktrials";
+if contains(version_name, "RL0_partialfeedbacktrials")
+    empirical_version_name = "RL0_partialfeedbacktrials";
 
-elseif contains(version_name, "MLNSG_0reversals_completefeedbacktrials")
-    empirical_version_name = "MLNSG_0reversals_completefeedbacktrials";
+elseif contains(version_name, "RL0_completefeedbacktrials")
+    empirical_version_name = "RL0_completefeedbacktrials";
 
-elseif contains(version_name, "MLNSG_0reversals_all")
-    empirical_version_name = "MLNSG_0reversals_all";
+elseif contains(version_name, "RL0_all")
+    empirical_version_name = "RL0_all";
 
-elseif contains(version_name, "MLNSG_1reversal_partialfeedback")
-    empirical_version_name = "MLNSG_1reversal_partialfeedback";
+elseif contains(version_name, "RL1_partialfeedback")
+    empirical_version_name = "RL1_partialfeedback";
 
-elseif contains(version_name, "MLNSG_1reversal_completefeedback")
-    empirical_version_name = "MLNSG_1reversal_completefeedback";
+elseif contains(version_name, "RL1_completefeedback")
+    empirical_version_name = "RL1_completefeedback";
 
-elseif contains(version_name, "MLNSG_1reversal_partial_complete")
-    empirical_version_name = "MLNSG_1reversal_all";
+elseif contains(version_name, "RL1_partial_complete")
+    empirical_version_name = "RL1_all";
 
-elseif (contains(version_name, "CDAG_partialfeedback"))
-    empirical_version_name = "CDAG_partialfeedback";
+elseif (contains(version_name, "RL3_partialfeedback"))
+    empirical_version_name = "RL3_partialfeedback";
     
-elseif (contains(version_name, "CDAG_completefeedback"))
-    empirical_version_name = "CDAG_completefeedback";
+elseif (contains(version_name, "RL3_completefeedback"))
+    empirical_version_name = "RL3_completefeedback";
     
-elseif contains(version_name, "CDAG_partial_complete")
-    empirical_version_name = "CDAG_all";
+elseif contains(version_name, "RL3_partial_complete")
+    empirical_version_name = "RL3_all";
 end
 
 % load behaviour to get list of participants in order

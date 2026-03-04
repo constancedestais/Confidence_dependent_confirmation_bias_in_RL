@@ -96,31 +96,21 @@ rng(seed)
 %% Choose data versions/models/outcome encoding and more
 
 % available datasets, in smallest subdivisions, you can recombine them later
-version_names_CD2   = ["CD2_v8","CD2_v9","CD2_v10","CD2_v11", "CD2_v12","CD2_v13","CD2_v14","CD2_v15"];
-version_names_CDAG  = ["CDAG_vA", "CDAG_vB", "CDAG_vC", "CDAG_vD"];
-version_names_MLNSG_1reversal  = ["MLNSG_1reversal_exp1", "MLNSG_1reversal_exp2", "MLNSG_1reversal_exp3"]; 
-version_names_MLNSG_0reversals = ["MLNSG_0reversals_exp1","MLNSG_0reversals_exp2","MLNSG_0reversals_exp3","MLNSG_0reversals_exp4","MLNSG_0reversals_exp5","MLNSG_0reversals_exp6","MLNSG_0reversals_exp7"]; 
-version_names_MLNSG_0reversals_partialfeedbacktrials = ["MLNSG_0reversals_exp1_partialfeedbacktrials","MLNSG_0reversals_exp2_partialfeedbacktrials","MLNSG_0reversals_exp3_partialfeedbacktrials","MLNSG_0reversals_exp4_partialfeedbacktrials","MLNSG_0reversals_exp5_partialfeedbacktrials","MLNSG_0reversals_exp6_partialfeedbacktrials","MLNSG_0reversals_exp7_partialfeedbacktrials"]; 
-version_names_MLNSG_0reversals_completefeedbacktrials = ["MLNSG_0reversals_exp1_completefeedbacktrials","MLNSG_0reversals_exp2_completefeedbacktrials","MLNSG_0reversals_exp3_completefeedbacktrials","MLNSG_0reversals_exp4_completefeedbacktrials","MLNSG_0reversals_exp5_completefeedbacktrials","MLNSG_0reversals_exp6_completefeedbacktrials","MLNSG_0reversals_exp7_completefeedbacktrials"]; 
+version_names_RL3  = ["RL3_vA", "RL3_vB", "RL3_vC", "RL3_vD"];
+version_names_RL1  = ["RL1_exp1", "RL1_exp2", "RL1_exp3"]; 
+version_names_RL0 = ["RL0_exp1","RL0_exp2","RL0_exp3","RL0_exp4","RL0_exp5","RL0_exp6","RL0_exp7"]; 
+version_names_RL0_partialfeedbacktrials = ["RL0_exp1_partialfeedbacktrials","RL0_exp2_partialfeedbacktrials","RL0_exp3_partialfeedbacktrials","RL0_exp4_partialfeedbacktrials","RL0_exp5_partialfeedbacktrials","RL0_exp6_partialfeedbacktrials","RL0_exp7_partialfeedbacktrials"]; 
+version_names_RL0_completefeedbacktrials = ["RL0_exp1_completefeedbacktrials","RL0_exp2_completefeedbacktrials","RL0_exp3_completefeedbacktrials","RL0_exp4_completefeedbacktrials","RL0_exp5_completefeedbacktrials","RL0_exp6_completefeedbacktrials","RL0_exp7_completefeedbacktrials"]; 
 
 % Set datasets (task versions) to use 
-version_names = [version_names_MLNSG_0reversals, ...
-                version_names_MLNSG_1reversal, ...
-                version_names_CDAG, ...
-                version_names_MLNSG_0reversals_partialfeedbacktrials, ...
-                version_names_MLNSG_0reversals_completefeedbacktrials ];
-%{
-[version_names_MLNSG_0reversals, ...
-                version_names_MLNSG_1reversal, ...
-                version_names_CDAG, ...
-                version_names_MLNSG_0reversals_partialfeedbacktrials, ...
-                version_names_MLNSG_0reversals_completefeedbacktrials ];
-
-%}
+version_names = [version_names_RL0, ...
+                version_names_RL1, ...
+                version_names_RL3, ...
+                version_names_RL0_partialfeedbacktrials, ...
+                version_names_RL0_completefeedbacktrials ];
 
 % Models that I want to fit - exclude models that depend on volatility conditions for tasks with no volatility manipulation
-    % available_models = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];  
-models = [1,2,4]; %[1,2,4]; 
+models = [1,2,4]; 
 
 % Use "relative" vs "semirelative" vs "actual" outcomes ; relative: -1 vs 1 for best and worst outcomes in a trial; semi-relative: rescale two outcomes compared to their mean; 
 outcome_encoding = "actual";
@@ -168,44 +158,8 @@ for v = 1:numel(version_names)
     % call function which handles model fitting
     use_parallel = 1; % !! needs to be accompanied by change to loop call (parfor vs normal for loop) in fit_several_models.m
     modelling_outputs = fit_several_models(data, models, fmincon_options, n_repetition_of_parameter_estimation, use_parallel, models_info, version_names(v) );
-
-    %% deal with MLNSG_0reversals with partial/complete feedback trials
-    %{
-    % set which conditions should be empty 
-    conditions_to_remove = [];
-    if contains(version_names(v), "partialfeedbacktrials")
-        % condition_names = ["partial_info_gain" ; "full_info_gain" ; "partial_info_loss" ; "full_info_loss"];
-        conditions_to_remove = [2,4];
-    elseif contains(version_names(v), "completefeedbacktrials")
-        % condition_names = ["partial_info_gain" ; "full_info_gain" ; "partial_info_loss" ; "full_info_loss"];
-        conditions_to_remove = [1,3];
-    end
-    % SANITY CHECKS to deal with MLNSG_0reversals with partial/complete feedback trials only : check that values in absent conditions are NaNs
-    if contains(version_names(v), "partialfeedbacktrials") || contains(version_names(v), "completefeedbacktrials")
-        % check in variables that all values in "absent" conditions are filled with NaNs
-        assert(sum(isnan(correct(   :,:,conditions_to_remove,:)),"all") == numel(correct(   :,:,conditions_to_remove,:)), "Problem, in sub-task with partial/complete feedback, values in conditions with opposite type of feedback should be NaNs")
-        assert(sum(isnan(confidence(:,:,conditions_to_remove,:)),"all") == numel(confidence(:,:,conditions_to_remove,:)), "Problem, in sub-task with partial/complete feedback, values in conditions with opposite type of feedback should be NaNs")
-        assert(sum(isnan(chosen(    :,:,conditions_to_remove,:)),"all") == numel(chosen(    :,:,conditions_to_remove,:)), "Problem, in sub-task with partial/complete feedback, values in conditions with opposite type of feedback should be NaNs")
-    end
-    %}
  
     %% save
-    
-    %{
-    % FOR DEBUGGING: PLOT MODEL FIT VARIABLES AROUND REVERSAL
-    % call function that plots variables around reversals (including model fits)
-    data.fitted_pCorrect = PCorrect{14};
-    data.fitted_pSwitch = PSwitch{14};
-
-    plot_modelfit_around_reversal(     data, 2,   14, outcome_encoding, version_names(v), fullfile(output_dir,'Figures'));      
-    TEMP_plot_modelfit_around_reversal(data, 2,   14 , outcome_encoding,   version_names(v), fullfile(output_dir,'Figures'));
-
-    % plot variables around the reversal
-    plot_behaviour_around_reversal(data, 2, "simulated", fullfile(output_dir,'Figures'))
-  
-    % plot variables across all trials in a block
-    plot_behaviour_over_block(data, "simulated", fullfile(output_dir,'Figures'))
-    %}
    
     % save seed for reproducibility
     modelling_outputs.seed = seed;

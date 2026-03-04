@@ -9,12 +9,12 @@ load_working_environment;
 % average confidence/accuracy for trial around reversal (t-1 to t+5) 
 % with a t-test comparing confidence on trial t_x vs. t (or t-1 for accuracy) to see if there is a significant drop in confidence/accuracy after the reversal
 
-fprintf("======== MLNSG_1reversal_all ========")
+fprintf("======== RL1_all ========")
 
 pre  = 1;
 post = 5;
 
-version_name = [ "MLNSG_1reversal_all"] ; %+ version_names_CD2 ; %version_names_MLNSG + version_names_CDAG; 
+version_name = [ "RL1_all"] ; 
 cond_idx = [2 4]; % only these conditions have a reversal
 
 % load behavioural data - load data in both table and matrix forms
@@ -43,12 +43,12 @@ clear d
 % average confidence/accuracy for trial around reversal (t-1 to t+5) 
 % with a t-test comparing confidence on trial t_x vs. t (or t-1 for accuracy) to see if there is a significant drop in confidence/accuracy after the reversal
 
-fprintf("======== CDAG_all ========")
+fprintf("======== RL3_all ========")
 
 pre  = 1;
 post = 5;
 
-version_name = [ "CDAG_all"] ; %+ version_names_CD2 ; %version_names_MLNSG + version_names_CDAG; 
+version_name = [ "RL3_all"] ; 
 cond_idx = [1 2 3 4]; 
 
 % load behavioural data - load data in both table and matrix forms
@@ -78,15 +78,15 @@ a=1;
 % do this for models 1, 2 and 4 (c.f. README)
 
 % Datasets (task versions) to loop over 
-version_names = ["MLNSG_0reversals_all", ...
-                 "MLNSG_1reversal_all", ...
-                 "CDAG_all", ...
-                 "MLNSG_0reversals_partialfeedbacktrials", ...
-                 "MLNSG_0reversals_completefeedbacktrials", ...
-                 "MLNSG_1reversal_partialfeedback", ... 
-                 "MLNSG_1reversal_completefeedback", ...
-                 "CDAG_partialfeedback", ...
-                 "CDAG_completefeedback"
+version_names = ["RL0_all", ...
+                 "RL1_all", ...
+                 "RL3_all", ...
+                 "RL0_partialfeedbacktrials", ...
+                 "RL0_completefeedbacktrials", ...
+                 "RL1_partialfeedback", ... 
+                 "RL1_completefeedback", ...
+                 "RL3_partialfeedback", ...
+                 "RL3_completefeedback"
                  ];
 
 % Models to loop over

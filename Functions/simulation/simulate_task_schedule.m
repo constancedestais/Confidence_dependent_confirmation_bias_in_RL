@@ -155,13 +155,13 @@ function output = simulate_task_schedule( n_agents, ...
 
         % TO PUT IN A FUNCTION//OBJECT?
         % prepare names of conditions - depends on real dataset from which we will use confidence and outcomes
-        if version_name == "MLNSG_0reversals_partialfeedbacktrials"
+        if version_name == "RL0_partialfeedbacktrials"
             condition_names_all  = ["partial_info_gain"; ""; "partial_info_loss"; ""]; 
-        elseif version_name == "MLNSG_0reversals_completefeedbacktrials" 
+        elseif version_name == "RL0_completefeedbacktrials" 
             condition_names_all  = [""; "full_info_gain"; ""; "full_info_loss"]; 
-        elseif version_name == "MLNSG_0reversals_all" 
+        elseif version_name == "RL0_all" 
             condition_names_all  = ["partial_info_gain"; "full_info_gain"; "partial_info_loss"; "full_info_loss"]; 
-        elseif contains(version_name,[ "MLNSG_1reversal_partialfeedback","MLNSG_1reversal_completefeedback","CDAG_partialfeedback","CDAG_completefeedback"]) 
+        elseif contains(version_name,[ "RL1_partialfeedback","RL1_completefeedback","RL3_partialfeedback","RL3_completefeedback"]) 
             condition_names_all  = ["low_volatility_gain"; "high_volatility_gain"; "low_volatility_loss"; "high_volatility_loss"]; 
         else
             condition_names_all  = ["low_volatility_gain"; "high_volatility_gain"; "low_volatility_loss"; "high_volatility_loss"]; 

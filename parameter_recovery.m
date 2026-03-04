@@ -87,23 +87,23 @@ while w < n_iterations
     
     % Version_names - IMPORTANT: this used to get task contingencies (task schedule, including real participants' confidence) and real participant parameters 
     % options: 
-    %   "CDAG_partialfeedback"  
-    %   "CDAG_completefeedback"   
-    %   "MLNSG_1reversal_partialfeedback"  
-    %   "MLNSG_1reversal_completefeedback"   
-    %   "MLNSG_0reversals_all"  
-    % Do NOT request "CDAG_all" or "MLNSG_1_all" because it will randomly draw participant data with either Complete or Partial Info (between-participant factor)
-    % Do NOT request "MLNSG_0_reversals_partialfeedback" or "MLNSG_0_reversals_completefeedback" because feedback was a within-participant factor in this dataset
+    %   "RL3_partialfeedback"  
+    %   "RL3_completefeedback"   
+    %   "RL1_partialfeedback"  
+    %   "RL1_completefeedback"   
+    %   "RL0_all"  
+    % Do NOT request "RL3_all" or "RL1_all" because it will randomly draw participant data with either Complete or Partial Info (between-participant factor)
+    % Do NOT request "RL0_partialfeedback" or "RL0_completefeedback" because feedback was a within-participant factor in this dataset
 
-    version_name = "CDAG_completefeedback";
+    version_name = "RL3_completefeedback";
 
     % generic version name
-    if contains(version_name, "CDAG")
-        reward_structure_dataset_name = 'CDAG';
-    elseif contains(version_name, "MLNSG_0")
-        reward_structure_dataset_name = 'MLNSG_0reversals';
-    elseif contains(version_name, "MLNSG_1")
-        reward_structure_dataset_name = 'MLNSG_1reversal';  
+    if contains(version_name, "RL3")
+        reward_structure_dataset_name = 'RL3';
+    elseif contains(version_name, "RL0")
+        reward_structure_dataset_name = 'RL0';
+    elseif contains(version_name, "RL1")
+        reward_structure_dataset_name = 'RL1';  
     end
 
     % Use "relative" vs "semirelative" vs "actual" outcomes ; relative: -1 vs 1 for best and worst outcomes in a trial; semi-relative: rescale two outcomes compared to their mean; 
@@ -209,11 +209,11 @@ while w < n_iterations
         Those NaNs used to propagate into the simulated datasets, which silently zeroed gradients in fmincon; with the cleaned matrices the likelihood surface is much smoother
     %}
     
-    % trim datasets with unequal numbers of trials (MLNSG_0_reversals and MLNSG_1_reversal) - to avoid dealing with NaN values linked to different lengths of blocks 
-    if (strcmp(reward_structure_dataset_name, "MLNSG_0reversals" ) || strcmp(reward_structure_dataset_name, "MLNSG_1reversal"))
-        if strcmp(reward_structure_dataset_name, "MLNSG_0reversals" )
+    % trim datasets with unequal numbers of trials (RL0 and RL1_reversal) - to avoid dealing with NaN values linked to different lengths of blocks 
+    if (strcmp(reward_structure_dataset_name, "RL0" ) || strcmp(reward_structure_dataset_name, "RL1"))
+        if strcmp(reward_structure_dataset_name, "RL0" )
             min_n_trials = 20;
-        elseif strcmp(reward_structure_dataset_name, "MLNSG_1reversal")
+        elseif strcmp(reward_structure_dataset_name, "RL1")
             min_n_trials = 28;
         end
         % loop through all fields and cut them to the minimal number of trials
