@@ -159,4 +159,4 @@ outputs.modelling_outcomes_by_repetition = modelling_outcomes_by_repetition;
 outputs.reward_structure_dataset_name = reward_structure_dataset_name;
 outputs.empirical_modelling_outputs = empirical_modelling_outputs;
 outputs.colors = colors;
-outputs.models_info = load_models_info_constance();
+outputs.models_info = load_models_info();

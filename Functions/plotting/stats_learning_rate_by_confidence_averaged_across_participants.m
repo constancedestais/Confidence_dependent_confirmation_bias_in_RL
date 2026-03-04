@@ -27,7 +27,7 @@ structure (variables_for_plot{}) with the following variables
 n_participants = numel(params(:,3)); 
 confidence_rescaled = linspace(0.5,1,11); 
 
-[models_info,extra_models_info] = load_models_info_constance;
+[models_info,extra_models_info] = load_models_info;
 
 
 %% compute learning rate for each confidence value for each participant, then average individuals values/traces over all participants

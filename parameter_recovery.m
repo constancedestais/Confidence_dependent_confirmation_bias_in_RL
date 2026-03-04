@@ -45,10 +45,10 @@ close all
 clc
 format longg
 
-% set whether this is running on DEC server or not
-run_on_DEC_server = 1;
+% set whether this is running on external server or not
+running_on_external_server = 1;
 % set reference directory
-if (run_on_DEC_server == 1)
+if (running_on_external_server == 1)
     filePath = mfilename('fullpath'); 
 else
     filePath = matlab.desktop.editor.getActiveFilename;
@@ -82,7 +82,7 @@ while w < n_iterations
     %% set important variables
     
     % Load information about model parameters and priors
-    [models_info,models_info_extra] = load_models_info_constance(); 
+    [models_info,models_info_extra] = load_models_info(); 
     max_number_of_models = numel(models_info);
     
     % Version_names - IMPORTANT: this used to get task contingencies (task schedule, including real participants' confidence) and real participant parameters 
@@ -107,7 +107,7 @@ while w < n_iterations
     end
 
     % Use "relative" vs "semirelative" vs "actual" outcomes ; relative: -1 vs 1 for best and worst outcomes in a trial; semi-relative: rescale two outcomes compared to their mean; 
-    outcome_encoding_for_fitting = "actual"; % TO DO CONSTANCE: need to think about whether i re-scale outcomes when doing simulation too!!
+    outcome_encoding_for_fitting = "actual";
     
     % Models used for generating data
     % models = [1,2,4];

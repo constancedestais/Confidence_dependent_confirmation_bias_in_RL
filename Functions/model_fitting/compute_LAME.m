@@ -15,17 +15,5 @@ if ~isreal(det(hessian_of_negative_log_posterior_probability))
     error('compute_LAME(): current determinant of the Hessian has an imaginary part.')
 end
 
-%{
---- WORRY ---
-Here i'm taking the hessian of the nLPP, but original formula says hessian of LPP
---- ANSWER ---
-According to chatGPT, in original formula:
-LAME = LPP + (n/2)*log(2*pi) - (1/2)*log(det(H)) 
-where H actually corresponds to MINUS the second-order partial derivative of LPP, so H = -nabla^2(LPP). 
-    NB: What you get with the hessian command in MATLAB is the second-order partial derivative of x, or nabla^2(x)
-    NB: General property of the second-order partial derivative: nabla^2(x) = -nabla^2(x).
-So if I have nLPP instead of LPP and similarly the second-order partial derivative of the nLPP (nabla^2(nLPP)), 
-then I can directly use it because: H = -nabla^2(LPP) = nabla^2(nLPP)
-%}
 
 end

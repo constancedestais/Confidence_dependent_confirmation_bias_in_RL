@@ -1,10 +1,8 @@
-function skylineplot_Antonis(type, InputCell, opts)
+function my_skylineplot(type, InputCell, opts)
 
-% Based on Sophie Bavard's script - December 2018
-% Modified by Antonis Nasioulas to create different types of graphs 
-% (number of factors (types of grouping), lines connecting individuals' values, reference point)
-% Modifications by Constance Destais
-% (including adding inputs for indvidual dot_size and sem_bar_width)
+% Based on Sophie Bavard's script - 2018
+% Modified by Antonis Nasioulas - 2022
+% Modified by Constance Destais 
 
 % INPUTS
 % type = (type of the group)
@@ -48,7 +46,7 @@ type = 2;
 violin_colors_in_order = [red ; green];
 
 figure;
-skylineplot_Antonis(type,data,violin_colors_in_order,ymin,ymax,x_ref_input,font_size,title,x_label,y_label)
+my_skylineplot(type,data,violin_colors_in_order,ymin,ymax,x_ref_input,font_size,title,x_label,y_label)
 hold off
 
 % call plotting function to plot all 4 conditions
@@ -57,7 +55,7 @@ type = 4;
 violin_colors_in_order = [red ; green ; red ; green];
 
 figure;
-skylineplot_Antonis(type,data,violin_colors_in_order,ymin,ymax,x_ref_input,font_size,title,x_label,y_label)
+my_skylineplot(type,data,violin_colors_in_order,ymin,ymax,x_ref_input,font_size,title,x_label,y_label)
 hold off
 
 % call plotting function to plot all 4 conditions with EXTRA INPUTS (via varargin)
@@ -68,7 +66,7 @@ line_width = 2;
 highlight_connected_lines_in_dominant_direction  = 0;
 
 figure;
-skylineplot_Antonis(type,data,violin_colors_in_order,ymin,ymax,x_ref_input,font_size,title,x_label,y_label,x_tick_label,dot_size,sem_bar_size,line_width,highlight_connected_lines_in_dominant_direction);
+my_skylineplot(type,data,violin_colors_in_order,ymin,ymax,x_ref_input,font_size,title,x_label,y_label,x_tick_label,dot_size,sem_bar_size,line_width,highlight_connected_lines_in_dominant_direction);
 hold off
 
 % ----- 
@@ -97,7 +95,7 @@ type = 4;
 violin_colors_in_order = [red ; green ; red ; green];
 
 figure;
-skylineplot_Antonis(type,data,violin_colors_in_order,ymin,ymax,x_ref_input,font_size,title,x_label,y_label)
+my_skylineplot(type,data,violin_colors_in_order,ymin,ymax,x_ref_input,font_size,title,x_label,y_label)
 hold off
 
 
@@ -177,48 +175,6 @@ if iscell(InputCell)
 else
     DataCell = num2cell(InputCell,2);
 end
-
-
-% parse DataCell
-%{
-if iscell(DataCell)
-    if numel(DataCell) == 1
-       DataCell = DataCell{1}; % DataCell from this point contains only the data
-       dataCat=0;
-    elseif numel(DataCell) >= 2 
-        DataCell = DataCell{1}; %DataCell from this point contains only the data, in any case  
-        dataCat = DataCell{2};
-    end
-
-    if numel(DataCell) == 3
-        dataCatSampleSizes = DataCell{3}; % not sure what this does
-    end
-else % if matrix
-    dataCat=0;
-    % data = DataCell; %keep version of the data in matrix format -> Antonis used this for plotting lines between points but I changed it to allow the use of DataCell in that part of the script too
-    % transforms the Data matrix into cell format if needed
-    DataCell = num2cell(DataCell,2);
-end
-
-% ---- type-specific checks ----
-% if plot lines between the dots, the two plots that are next to each other must have the same number of data points
-if type == 2
-    assert(isequal(size(DataCell{1}), size(DataCell{2})), ...
-        "If type=2, connected conditions must match number of points.");
-elseif type == 4
-    assert(isequal(size(DataCell{1}), size(DataCell{2})) && ...
-           isequal(size(DataCell{3}), size(DataCell{4})), ...
-        "If type=4, connected conditions must match number of points.");
-end
-
-%}
-
-% if nnz(isnan(DataCell))       
-%    DataCell = DataCell(:,all((~isnan(DataCell)),1));
-%    dataCat = dataCat(all((~isnan(DataCell)),1));
-%    fprintf('Warning: nan values detected. Plots without these entries.\n')    
-% end
-
 
 % number of factors/groups/conditions
 Nbar = size(DataCell,1);
@@ -338,8 +294,8 @@ for n = 1:Nbar
         c2 = -1;
         pair_dist=0.15;
     
-        %c1 = 0.5; % CONSTANCE ARTIFICALLY INCREASED DISTANCE BETWEEN VIOLIN AND DOTS
-        %pair_dist=0.2; % CONSTANCE ARTIFICALLY INCREASED DISTANCE BETWEEN VIOLIN AND DOTS SO HAD TO MANUALLY DECREASE THIS
+        %c1 = 0.5; % ARTIFICALLY INCREASED DISTANCE BETWEEN VIOLIN AND DOTS
+        %pair_dist=0.2; % ARTIFICALLY INCREASED DISTANCE BETWEEN VIOLIN AND DOTS SO HAD TO MANUALLY DECREASE THIS
     
         if ~isnan(xRefInput)
             xRefTemp = xRefInput + n - 1; 
@@ -383,7 +339,6 @@ for n = 1:Nbar
         elseif type==2 || type==4
             jitter=zeros(Nsub,1); %all dots on the same vertical line
         end
-        % TESTING CONSTANCE
         scatter(xRef-c1*coeff*violin_width/10 - c2*coeff*jitter.*(violin_width/2- violin_width/10), DataMatrix, dot_size,...
             Colors(n,:),'filled',...
             'marker','o',...
@@ -463,7 +418,7 @@ for n = 1:Nbar
     if type==4 
         if rem(n,2)==1     
             xRef1= xRef;
-            % xRef1 = xRef-c1*coeff*violin_width/10 - c2*coeff*jitter(1)*(violin_width/2- violin_width/10); % ATTEMPTED CHANGE BY CONSTANCE
+            % xRef1 = xRef-c1*coeff*violin_width/10 - c2*coeff*jitter(1)*(violin_width/2- violin_width/10); 
             xRef2= xRef+2*pair_dist;
             x1 = xRef1 + (2*rem(n,2)-1)* violin_width/20;
             x2 = xRef2 + (2*rem(n+1,2)-1)* violin_width/20;
@@ -473,18 +428,13 @@ for n = 1:Nbar
             %directions. Note, that when we have two factors, all the code
             %(not just this part) is coded with the assumption that the
             %second factor has two levels
-            % ORIGINAL ANTONIS VERSION
-            % means = mean(data,2,'omitnan'); 
-            % CONSTANCE: try to use cell version (DataCell) for everything that requires looking at all the provided datasets
+            % use cell version (DataCell) for everything that requires looking at all the provided datasets
                 % NB: cellfun applies function to each cell in cell array
             means =  cellfun(@(x) mean(x, 2, 'omitnan'), DataCell, 'UniformOutput', false); 
             means = cell2mat(means);
             % ColNonDom = [Colors(1,:),0.5]; ColDom = [Colors(2,:),0.5];
 
-            % ORIGINAL ANTONIS VERSION
-                % data2 = data([n n+1],:); %keep the two relevant rows
-                % data2 = data2(:,~any(isnan(data2), 1)); %omit columns with at least one nan entry;
-            % CONSTANCE: try to use cell version (DataCell) for everything that requires looking at all the provided datasets
+            % use cell version (DataCell) for everything that requires looking at all the provided datasets
                 % NB: cellfun applies function to each cell in cell array
             two_connected_datasets = DataCell([n n+1],:); %keep the two relevant rows
             nanIndices = isnan(two_connected_datasets{1}) | isnan(two_connected_datasets{2}); % identify pairs of values in which there is at least one NaN value
@@ -516,9 +466,7 @@ if type == 2
     if Nbar==2
         xx = arrayfun(@(n) n+(2*rem(n,2)-1)*violin_width/8,1:Nbar); % "/8" is for leaving some space between dots and lines
         
-        % ORIGINAL ANTONIS VERSION WITH MATRIX
-        % means = mean(data,2,'omitnan');   
-        % CONSTANCE: try to use cell version (DataCell) for everything that requires looking at all the provided datasets
+        % use cell version (DataCell) for everything that requires looking at all the provided datasets
             % NB: cellfun applies function to each cell in cell array
         means = cellfun(@(x) mean(x, 2, 'omitnan'), DataCell, 'UniformOutput', false); 
         means = cell2mat(means);

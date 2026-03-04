@@ -54,7 +54,7 @@ assert(ismatrix(real_parameters), 'generate_parameters_using_distribution_of_rea
 assert(ndims(real_parameters) == 2, 'generate_parameters_using_distribution_of_real_parameters(): real_parameters must be a 2D matrix');
 
 % Load information about model parameters and priors
-models_info = load_models_info_constance(); 
+models_info = load_models_info(); 
 
 % fit beta distribution to real parameters
 n_params = size(real_parameters,2);
@@ -96,23 +96,7 @@ for i_param = 1:n_params
                                                                                             i_param ...
                                                                                         );
 
-    a=1;
-
-    %% Plot original and generated data to check
-    %{
-    figure;
-    subplot(2, 1, 1);
-    histogram(real_parameters(:,i_param), 10, 'Normalization', 'pdf');
-    title('Original Data Histogram');
-    xlabel('Value');
-    ylabel('Probability Density');
     
-    subplot(2, 1, 2);
-    histogram(generated_parameters(:,i_param), 10, 'Normalization', 'pdf');
-    title('Generated Data Histogram (Beta)');
-    xlabel('Value');
-    ylabel('Probability Density');
-    %}
 end
 
 

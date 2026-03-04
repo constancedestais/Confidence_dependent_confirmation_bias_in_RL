@@ -12,7 +12,6 @@ function results = event_locked_participant_pipeline(d, variableNames, condIdx, 
 %       lags, perParticipant, mean, sem, N
 %       summaryTable (t-1, t, t+1..t+4) with 95% CI and 1-sided paired t-tests vs t
 
-% CONSTANCE
 % this loops over variable_names and returns a struct like results.<var_name> = out
 % helpful if you routinely compute many variables at once and want one object back
 

@@ -98,64 +98,11 @@ GOAL
                         % Model 2: confidence-dependent Q-learning
                         case 2
                             [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_2( input );
-            
-                        % Model 3: Q-learning + confidence-dependent choice temperature
-                        case 3
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_3( input );
-            
+                        
                         % Model 4: confidence-dependent Q-learning + confidence-dependent choice temperature
                         case 4
                             [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_4( input );
             
-                        % Model 5: confidence-dependent confirmatory Q-learning
-                        case 5
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_5( input );
-            
-                        % Model 6: confidence-dependent disconfirmatory Q-learning
-                        case 6
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_6( input );
-                        
-                        % Model 7: Q-learning with 1 LR (no confirmatory bias)
-                        case 7
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_7( input );
-                        
-                        % Model 8: Q-learning with 4 LR for confirmatory/disconfirmatory X chosen/unchosen 
-                        case 8
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_8( input );
-                        
-                        % Model 9: confidence-dependent learning, without differentiating confirmatory/disconfirmatory
-                        case 9
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_9( input );
-                       
-                        % Model 10: confidence-dependent Q-learning with only one intercept
-                        case 10
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_10( input );
-                        
-                        % Model 11: confidence-dependent Q-learning with only one intercept + confidence-dependent choice temperature
-                        case 11
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_11( input );
-            
-                        % Model 12: Q-learning with 4 LR for valence x volatility, without differentiating confirmatory/disconfirmatory
-                        case 12
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_12( input );
-                        
-                        % Model 13: Q-learning with 8 LR for valence x volatility x confirmatory/disconfirmatory 
-                        case 13
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_13( input );
-        
-                        % Model 14: Q-learning with 4 LR for volatility x confirmatory/disconfirmatory 
-                        case 14
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_14( input );
-        
-                        % Model 15: Q-learning with 4 LR for valence x confirmatory/disconfirmatory 
-                        case 15
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_15( input );
-                        % Model 16: Q learning with confidence-dependent learning: valence x confirmatory/disconfirmatory 
-                        case 16 
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_16( input );
-                        % Model 17: Q learning with confidence-dependent choice & confidence-dependent learning: valence x confirmatory/disconfirmatory 
-                        case 17 
-                            [Q(s,c,t+1,:),actions(s,c,t),outcomes(s,c,t),cf_outcomes(s,c,t),correct(s,c,t),confidence(s,c,t)] = generate_model_17( input );
                         %%
                         otherwise 
                             warning('Model %t does not exist in generate_data.m', model)
@@ -193,25 +140,6 @@ GOAL
     chose_symbol_1(actions == 2) = 0;
     chose_symbol_1(isnan(actions)) = NaN;
     
-    %{
-    % fill in symbol_1_actual_payoff & symbol_2_actual_payoff
-    % create temporary variables for current condition
-    symbol_1_actual_payoff_here = symbol_1_actual_payoff(s,c,:);
-    symbol_2_actual_payoff_here = symbol_2_actual_payoff(s,c,:);
-    outcomes_here               = outcomes(s,c,:);    
-    cf_outcomes_here            = cf_outcomes(s,c,:); 
-    actions_here                = actions(s,c,:);
-    % use information about chosen opetion (action) and about obtained outcome (outcome) vs counterfactual outcome (cf_outcome) to fill in the two temporary variables
-    symbol_1_actual_payoff_here(actions_here == 1) = outcomes_here(actions_here == 1);        
-    symbol_2_actual_payoff_here(actions_here == 2) = outcomes_here(actions_here == 2);
-    symbol_1_actual_payoff_here(actions_here == 2) = cf_outcomes_here(actions_here == 2);
-    symbol_2_actual_payoff_here(actions_here == 1) = cf_outcomes_here(actions_here == 1);
-    % replace temporary variables in main variables
-    symbol_1_actual_payoff(s,c,:) = symbol_1_actual_payoff_here;
-    symbol_2_actual_payoff(s,c,:) = symbol_2_actual_payoff_here;
-    clear symbol_1_actual_payoff_here symbol_2_actual_payoff_here outcomes_here cf_outcomes_here actions_here
-    %}
-    
     % combine the variables into a structure for the output
     output_stucture = {};
     output_stucture.symbol_chosen_id_relative     = actions;
@@ -221,8 +149,6 @@ GOAL
     output_stucture.confidence_rating             = confidence;
     output_stucture.switched_choice               = switched_choice;
     output_stucture.chose_symbol_1                = chose_symbol_1;
-    % output_stucture.symbol_1_actual_payoff      = symbol_1_actual_payoff;
-    % output_stucture.symbol_2_actual_payoff      = symbol_2_actual_payoff;
     
     %% sanity checks
 
@@ -251,18 +177,7 @@ GOAL
     %assert( isequal(size(   output_stucture.confidence_rating ), [n_sess, n_cond, n_trial+1]) , 'Problem: the dimensions of confidence_rating should be: n_sess, n_cond, n_trial+1' ) ;
     assert( isequal(size(   output_stucture.confidence_rating ), [n_sess, n_cond, n_trial]) , 'Problem: the dimensions of confidence_rating should be: n_sess, n_cond, n_trial+1' ) ;
     assert( isequal(size(   output_stucture.switched_choice ), [n_sess, n_cond, n_trial]) ,   'Problem: the dimensions of switched_choice should be: n_sess, n_cond, n_trial' ) ;
-    
-    % check for NaNs
-    % CONSTANCE: TO BE DEALT WITH
-    %{
-    assert( sum(isnan(output_stucture.symbol_chosen_id_relative),"all") < numel(output_stucture.symbol_chosen_id_relative) , 'Problem, symbol_chosen_id_relative is full of NaNs');
-    assert( sum(isnan(output_stucture.symbol_chosen_actual_payoff),"all") < numel(output_stucture.symbol_chosen_actual_payoff) , 'Problem, symbol_chosen_actual_payoff is full of NaNs');
-    assert( sum(isnan(output_stucture.symbol_unchosen_actual_payoff),"all") < numel(output_stucture.symbol_unchosen_actual_payoff) , 'Problem, symbol_unchosen_actual_payoff is full of NaNs');
-    assert( sum(isnan(output_stucture.chose_highest),"all") < numel(output_stucture.chose_highest) , 'Problem, chose_highest is full of NaNs');
-    assert( sum(isnan(output_stucture.confidence_rating),"all") < numel(output_stucture.confidence_rating) , 'Problem, confidence_rating is full of NaNs');
-    assert( sum(isnan(output_stucture.switched_choice),"all") < numel(output_stucture.switched_choice) , 'Problem, switched_choice is full of NaNs');
-    %}
-    
+
     
     
     

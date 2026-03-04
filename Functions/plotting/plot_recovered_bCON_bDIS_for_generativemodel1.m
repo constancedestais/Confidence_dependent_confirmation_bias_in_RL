@@ -19,7 +19,7 @@ assert( ~isempty( recovered_parameters_combined_repetitions ) , 'plot_parameter_
 
 color_dict = load_my_colors();
 
-[models_info, models_info_extra] = load_models_info_constance();
+[models_info, models_info_extra] = load_models_info();
 
 % set figure settings 
 
@@ -112,7 +112,7 @@ if generative_model == 1
             end
 
             % call plotting function
-            skylineplot_Antonis(type, data, ...
+            my_skylineplot(type, data, ...
                     Colors=violin_colors_in_order, ...
                     YLim=[ymin ymax], ...
                     xRefInput=x_ref_input, ...

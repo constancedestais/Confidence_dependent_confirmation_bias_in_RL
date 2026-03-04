@@ -42,11 +42,9 @@ dbstop if error
 
 fprintf(' -------- have started running script simulation_ENS_server.m --------\n')
 
-% set whether this is running on DEC server or not
-run_on_DEC_server = 1;
-
 % set reference directory
-if (run_on_DEC_server == 1)
+running_on_external_server = 1;
+if (running_on_external_server == 1)
     filePath = mfilename('fullpath') % mfilename('fullpath') ; % matlab.desktop.editor.getActiveFilename;
 else
     filePath = matlab.desktop.editor.getActiveFilename;
@@ -64,20 +62,20 @@ addpath(genpath('Functions'), genpath('Data'), genpath('Outputs'))  % add folder
 addpath(genpath('../MBB-team_VBA-toolbox')); % add folder and contained folders
 
 % set directories for saving outputs and figures
-if (run_on_DEC_server == 1)
+if (running_on_external_server == 1)
     % create figure output directory with current date and time
     currentDateTime = datestr(now, 'yyyy_mm_dd__HH_MM_SS'); % Format: Year-Month-Day_Hour-Minute-Second
-    DEC_server_outputs_dir = fullfile(output_dir,sprintf('server_outputs_%s',currentDateTime));  
+    external_server_outputs_dir = fullfile(output_dir,sprintf('server_outputs_%s',currentDateTime));  
     % Create the folder in the current working directory
-    mkdir(DEC_server_outputs_dir);
+    mkdir(external_server_outputs_dir);
     % Display confirmation
-    disp(['Folder "' DEC_server_outputs_dir '" created in the current directory.']);
+    disp(['Folder "' external_server_outputs_dir '" created in the current directory.']);
     % add new folder to path
     addpath(genpath('Functions'), genpath('Data'), genpath('Outputs'));  % add folder and contained folders
 
     % replace both directories used for export by this dated directory
-    output_export_dir  = DEC_server_outputs_dir;
-    figures_export_dir = DEC_server_outputs_dir;
+    output_export_dir  = external_server_outputs_dir;
+    figures_export_dir = external_server_outputs_dir;
 else 
    output_export_dir  = output_dir ;
    figures_export_dir = figures_dir ;
@@ -138,7 +136,7 @@ n_repetition_of_parameter_estimation   = 3;
 %% Set useful variables 
 
 % Load information about model parameters and priors
-models_info = load_models_info_constance(); 
+models_info = load_models_info(); 
 
 %% fit models for each dataset/pilot version
 for v = 1:numel(version_names)

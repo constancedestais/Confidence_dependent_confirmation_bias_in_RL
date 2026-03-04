@@ -112,37 +112,6 @@ GOAL
 
     end % for k_subj = 1:n_participants  
 
-    %% ONLY RUN FOR DEBUG - sanity check 
-    %{
-    % Check for duplicates (agents with exact same schedule)
-    field_names =   {'symbol_chosen_id_relative'       ;
-                    'symbol_chosen_actual_payoff'      ;
-                    'symbol_unchosen_actual_payoff'    ;
-                    'chose_highest'                    ;
-                    %'confidence_rating'                ; % because confidence is not generated (dependending on confidence generation method), there will be many duplicates
-                    'switched_choice'                  ;
-                    'chose_symbol_1'  };
-    n_participants = size(task_schedule.(field_names{1}), 1);
-
-    for i = 1:numel(field_names)
-        fn = field_names{i};
-        field_data = task_schedule.(fn);
-    
-        assert(size(field_data,1) == n_participants, ...
-            "Field %s: expected first dim = n_participants", fn);
-    
-        X = reshape(field_data, n_participants, []);
-        n_unique = size(unique(X, 'rows'), 1);
-        n_duplicates = n_participants - n_unique;
-    
-        fprintf('%s: %d duplicates (%.2f%%)\n', fn, n_duplicates, 100*n_duplicates/n_participants);
-    
-        % threshold example (10%)
-        assert(n_duplicates < 0.10*n_participants, ...
-            "Too many duplicate agents in field %s: %d (%.2f%%)", ...
-            fn, n_duplicates, 100*n_duplicates/n_participants);
-    end
-    %}
     clear has_duplicates field_names
 end
 

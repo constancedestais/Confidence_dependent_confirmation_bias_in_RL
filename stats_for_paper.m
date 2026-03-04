@@ -2,7 +2,7 @@
 % among other things, loads the folowing directories: output_dir, data_dir, figures_dir
 load_working_environment; 
 
-[models_info,models_info_extra] = load_models_info_constance();
+[models_info,models_info_extra] = load_models_info();
 
 %% Choose data versions
 

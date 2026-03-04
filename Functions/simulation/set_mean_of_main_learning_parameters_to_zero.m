@@ -3,7 +3,7 @@ function [generated_parameters] = set_mean_of_main_learning_parameters_to_zero(g
 assert( ismember(generative_model, [2,4,10,11]), 'Problem: The model you have requested is not dealt with in the following function: set_mean_of_main_learning_parameters_to_zero.m ' )
 
 % Load information about model parameters 
-[~,models_info_extra] = load_models_info_constance(); 
+[~,models_info_extra] = load_models_info(); 
 
 n_agents = size(generated_parameters,1);
 

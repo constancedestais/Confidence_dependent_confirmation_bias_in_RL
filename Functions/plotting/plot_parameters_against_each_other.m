@@ -14,7 +14,7 @@ function [] = plot_parameters_against_each_other(parameters_multiple_datasets, v
 %   A cell array with one cell per dataset
 %   Each dataset contains matrix of fitted parameters of size: n_participants x n_params
 %   The mapping from parameter columns to a_CON/a_DIS/b_CON/b_DIS is obtained via:
-%     load_models_info_constance() -> models_info_extra.indices_a_CON_DIS / indices_b_CON_DIS
+%     load_models_info() -> models_info_extra.indices_a_CON_DIS / indices_b_CON_DIS
 %
 % version_name (char/string)
 %   Label used in saved filenames (e.g., "v1", "replication").
@@ -39,7 +39,7 @@ function [] = plot_parameters_against_each_other(parameters_multiple_datasets, v
     color_dict = load_my_colors();
 
     % Load model info (for parameter indices)
-    [models_info, models_info_extra] = load_models_info_constance();
+    [models_info, models_info_extra] = load_models_info();
 
     % Names for plots
     variable_names = ["aCON","aDIS";
