@@ -204,7 +204,7 @@ while w < n_iterations
     %% standardise real participant behavioural datasets [NEW STEP] 
     %{
     GPT:
-    - MLNSG variants are trimmed so every participant contributes the same number of trials
+    - RL0 and RL1 variants are trimmed so every participant contributes the same number of trials
     - impute_missing_confidence_and_choice removes any NaNs in confidence, choices, and outcomes.
         Those NaNs used to propagate into the simulated datasets, which silently zeroed gradients in fmincon; with the cleaned matrices the likelihood surface is much smoother
     %}
