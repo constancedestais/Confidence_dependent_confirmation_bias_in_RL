@@ -1,7 +1,7 @@
 
 # Confidence-dependent confirmation bias in reinforcement learning
 
-Code for model fitting, statistics, figures, and parameter-recovery analyses for paper.
+Code for model fitting, statistics, figures, and parameter-recovery analyses for paper and Supplementary Material.
 Paper DOI: [WILL BE ADDED UPON ACCEPTANCE OF THE PAPER]
 
 ## Repository contents
@@ -42,17 +42,17 @@ Place these files in the Data/ directory:
 - model 2: confidence-dependent learning rates, no confidence modulation of choice
 - model 4: confidence-dependent learning rates, AND confidence modulation of choice
 
-## Available datasets
+## Available datasets 
 
 - "MLNSG_0reversals_all"
 - "MLNSG_1reversal_all"
 - "CDAG_all"
-- "MLNSG_0reversals_partialfeedbacktrials"
-- "MLNSG_0reversals_completefeedbacktrials"
-- "MLNSG_1reversal_partialfeedback" 
-- "MLNSG_1reversal_completefeedback"
-- "CDAG_partialfeedback"
-- "CDAG_completefeedback"
+- "MLNSG_0reversals_partialfeedbacktrials" - subset of MLNSG_0reversals_all, split by within-participant Information condition 
+- "MLNSG_0reversals_completefeedbacktrials" - subset of MLNSG_0reversals_all, split by within-participant Information condition 
+- "MLNSG_1reversal_partialfeedback" - subset of MLNSG_1reversal_all, split by between-participant Information condition 
+- "MLNSG_1reversal_completefeedback" - subset of MLNSG_1reversal_all, split by between-participant Information condition 
+- "CDAG_partialfeedback" - subset of CDAG_all, split by between-participant Information condition 
+- "CDAG_completefeedback" - subset of CDAG_all, split by between-participant Information condition 
 
 ## Quick start
 
