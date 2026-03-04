@@ -16,6 +16,16 @@ Paper DOI: [WILL BE ADDED UPON ACCEPTANCE OF THE PAPER]
   - `figures_for_SupplementaryMaterial.m`
   - `parameter_recovery.m`
 
+## Required Data Files
+Data files will be made available online.
+Place these files in the Data/ directory:
+- data_CDAG_LearningTask_table.csv
+- data_MLNSG_0reversals_table.csv
+- data_MLNSG_1reversal_table.csv
+- data_CDAG_LearningTask_matrix.mat
+- data_MLNSG_0reversals_matrix.mat
+- data_MLNSG_1reversal_matrix.mat
+
 ## Requirements
 
 - MATLAB
@@ -24,7 +34,6 @@ Paper DOI: [WILL BE ADDED UPON ACCEPTANCE OF THE PAPER]
 - Parallel Computing Toolbox (optional, if `use_parallel = 1`)
 - Local dependency expected by scripts:
   - `../MBB-team_VBA-toolbox`
-- Folder named "Data", containing pre-processed data - will be made available online
 
 ## Available models
 
