@@ -8,6 +8,7 @@ Paper DOI: [WILL BE ADDED UPON ACCEPTANCE OF THE PAPER]
 
 - `Functions/`: model, fitting, loading, plotting, and simulation utilities
 - `Outputs/`: model-fitting outputs and generated figures
+- `Data/`: particiapnt data (see below)
 - Top-level scripts:
   - `fit_parameters_to_participants.m`
   - `stats_for_paper.m`
